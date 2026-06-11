@@ -57,7 +57,7 @@ class FieldServiceTest {
     void create_whenAreaExceedsFarmCapacity_shouldThrowBusinessRule() {
         FieldRequest request = new FieldRequest("Talhao X", new BigDecimal("30.00"), "Argiloso", 7L);
         when(currentUser.getCurrentUserId()).thenReturn(1L);
-        when(farmRepository.findByIdAndUser_Id(7L, 1L)).thenReturn(Optional.of(farm));
+        when(farmRepository.findByIdAndUser_IdForUpdate(7L, 1L)).thenReturn(Optional.of(farm));
         when(fieldRepository.sumAreaByFarmId(eq(7L), isNull())).thenReturn(new BigDecimal("80.00"));
 
         assertThatThrownBy(() -> fieldService.create(request))
@@ -71,7 +71,7 @@ class FieldServiceTest {
     void create_whenWithinCapacity_shouldPersistField() {
         FieldRequest request = new FieldRequest("Talhao Y", new BigDecimal("20.00"), "Argiloso", 7L);
         when(currentUser.getCurrentUserId()).thenReturn(1L);
-        when(farmRepository.findByIdAndUser_Id(7L, 1L)).thenReturn(Optional.of(farm));
+        when(farmRepository.findByIdAndUser_IdForUpdate(7L, 1L)).thenReturn(Optional.of(farm));
         when(fieldRepository.sumAreaByFarmId(eq(7L), isNull())).thenReturn(new BigDecimal("80.00"));
         when(fieldRepository.save(any(Field.class))).thenAnswer(inv -> {
             Field f = inv.getArgument(0);
@@ -90,7 +90,7 @@ class FieldServiceTest {
     void create_whenFarmNotOwned_shouldThrowResourceNotFound() {
         FieldRequest request = new FieldRequest("Talhao Z", new BigDecimal("10.00"), null, 999L);
         when(currentUser.getCurrentUserId()).thenReturn(1L);
-        when(farmRepository.findByIdAndUser_Id(999L, 1L)).thenReturn(Optional.empty());
+        when(farmRepository.findByIdAndUser_IdForUpdate(999L, 1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> fieldService.create(request))
                 .isInstanceOf(ResourceNotFoundException.class)
