@@ -1,5 +1,9 @@
 # AgroControl API
 
+![CI](https://github.com/Willian-dallagnol/AgroControl-api-Java/actions/workflows/ci.yml/badge.svg)
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3-brightgreen)
+
 API REST de gestão agrícola construída com **Java 21 + Spring Boot 3**. Organiza **Fazendas → Talhões → Culturas** por usuário, com autenticação JWT, controle de acesso por papel e **isolamento total de dados entre usuários**. É a reimplementação em Java/Spring da AgroControl originalmente escrita em Go.
 
 ---
